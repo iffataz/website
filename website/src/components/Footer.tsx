@@ -9,9 +9,9 @@ export function Footer() {
             <a href="https://github.com/iffataz" className="hover:text-zinc-900">
               GitHub
             </a>
-            <Link href="/resume" className="hover:text-zinc-900">
+            <a href="/resume.pdf" className="hover:text-zinc-900" target="_blank" rel="noopener noreferrer">
               Resume
-            </Link>
+            </a>
           </div>
           <p>© {new Date().getFullYear()} Iffat Abdul Azeez</p>
         </div>
