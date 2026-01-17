@@ -2,7 +2,8 @@ import { notFound } from 'next/navigation'
 import { Container } from '@/src/components/Container'
 import { Tag } from '@/src/components/Tag'
 import { getProjectBySlug, getAllProjects } from '@/src/lib/content/projects'
-import { serializeMdx, MdxContent } from '@/src/lib/content/mdx'
+import { serializeMdx } from '@/src/lib/content/mdx'
+import { MdxContent } from '@/src/components/MdxContent'
 import { createMetadata } from '@/src/lib/seo/metadata'
 
 export async function generateStaticParams() {
