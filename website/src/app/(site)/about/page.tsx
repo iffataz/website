@@ -1,4 +1,6 @@
 import { Container } from '@/src/components/Container'
+import { Card, CardDescription, CardHeader, CardTitle } from '@/src/components/ui/card'
+import { buttonClasses } from '@/src/components/ui/button'
 import { createMetadata } from '@/src/lib/seo/metadata'
 
 export const metadata = createMetadata({
@@ -9,52 +11,51 @@ export const metadata = createMetadata({
 
 export default function AboutPage() {
   return (
-    <Container className="py-12">
+    <Container className="py-16">
       <div className="max-w-3xl">
-        <h1 className="text-4xl font-bold tracking-tight mb-6">About</h1>
-        
-        <div className="prose prose-zinc max-w-none">
-          <p className="text-lg text-zinc-600 mb-6">
-            I'm a Computer Science student passionate about building data-driven products, 
-            energy analytics, and full-stack software. I enjoy working on projects that 
-            solve real-world problems and create meaningful impact.
-          </p>
+        <p className="text-xs font-semibold uppercase tracking-[0.35em] text-muted-foreground">About</p>
+        <h1 className="mt-3 text-4xl font-semibold tracking-tight font-serif sm:text-5xl">Building with data.</h1>
+        <p className="mt-6 text-lg text-muted-foreground">
+          I'm a Computer Science student passionate about building data-driven products, energy analytics,
+          and full-stack software. I enjoy translating complex systems into clear, useful experiences.
+        </p>
 
-          <section className="mb-8">
-            <h2 className="text-2xl font-semibold mb-4">Experience</h2>
-            <div className="space-y-6">
-              <div>
-                <h3 className="text-lg font-semibold">Full-stack Developer</h3>
-                <p className="text-zinc-600">Building modern web applications with React, Next.js, and TypeScript.</p>
-              </div>
-              <div>
-                <h3 className="text-lg font-semibold">Data Science Enthusiast</h3>
-                <p className="text-zinc-600">Exploring machine learning and data analytics to extract insights from complex datasets.</p>
-              </div>
-            </div>
-          </section>
+        <div className="mt-10 grid gap-4">
+          <Card>
+            <CardHeader>
+              <CardTitle className="text-lg">Full-stack Developer</CardTitle>
+              <CardDescription>
+                Building modern web applications with React, Next.js, and TypeScript.
+              </CardDescription>
+            </CardHeader>
+          </Card>
+          <Card>
+            <CardHeader>
+              <CardTitle className="text-lg">Data Science Enthusiast</CardTitle>
+              <CardDescription>
+                Exploring machine learning and analytics to extract insight from complex datasets.
+              </CardDescription>
+            </CardHeader>
+          </Card>
+        </div>
 
-          <section>
-            <h2 className="text-2xl font-semibold mb-4">Links</h2>
-            <div className="flex flex-col gap-3">
-              <a 
-                href="https://github.com/iffataz" 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="text-blue-600 hover:text-blue-800 underline"
-              >
-                GitHub
-              </a>
-              <a 
-                href="/resume.pdf" 
-                className="text-blue-600 hover:text-blue-800 underline"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                Resume
-              </a>
-            </div>
-          </section>
+        <div className="mt-10 flex flex-wrap gap-3">
+          <a
+            href="https://github.com/iffataz"
+            target="_blank"
+            rel="noopener noreferrer"
+            className={buttonClasses({ variant: 'outline' })}
+          >
+            GitHub
+          </a>
+          <a
+            href="/resume.pdf"
+            className={buttonClasses({ variant: 'secondary' })}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Resume
+          </a>
         </div>
       </div>
     </Container>

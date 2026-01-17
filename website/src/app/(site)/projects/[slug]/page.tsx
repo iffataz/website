@@ -1,6 +1,7 @@
 import { notFound } from 'next/navigation'
 import { Container } from '@/src/components/Container'
 import { Tag } from '@/src/components/Tag'
+import { buttonClasses } from '@/src/components/ui/button'
 import { getProjectBySlug, getAllProjects } from '@/src/lib/content/projects'
 import { serializeMdx } from '@/src/lib/content/mdx'
 import { MdxContent } from '@/src/components/MdxContent'
@@ -37,25 +38,28 @@ export default async function ProjectPage({ params }: { params: { slug: string }
   const mdxSource = await serializeMdx(project.content)
 
   return (
-    <Container className="py-12">
+    <Container className="py-16">
       <article>
-        <header className="mb-8">
-          <h1 className="text-4xl font-bold tracking-tight mb-4">{project.title}</h1>
-          <p className="text-xl text-zinc-600 mb-6">{project.description}</p>
-          
-          <div className="flex flex-wrap gap-4 text-sm text-zinc-600 mb-4">
+        <header className="space-y-6">
+          <p className="text-xs font-semibold uppercase tracking-[0.35em] text-muted-foreground">Project</p>
+          <div>
+            <h1 className="text-4xl font-semibold tracking-tight font-serif sm:text-5xl">{project.title}</h1>
+            <p className="mt-4 text-lg text-muted-foreground">{project.description}</p>
+          </div>
+
+          <div className="flex flex-wrap gap-6 text-sm text-muted-foreground">
             <div>
-              <span className="font-medium">Date:</span> {project.date}
+              <span className="font-semibold text-foreground/80">Date:</span> {project.date}
             </div>
             {project.role && (
               <div>
-                <span className="font-medium">Role:</span> {project.role}
+                <span className="font-semibold text-foreground/80">Role:</span> {project.role}
               </div>
             )}
           </div>
 
           {project.tags.length > 0 && (
-            <div className="flex flex-wrap gap-2 mb-6">
+            <div className="flex flex-wrap gap-2">
               {project.tags.map((tag) => (
                 <Tag key={tag}>{tag}</Tag>
               ))}
@@ -63,19 +67,18 @@ export default async function ProjectPage({ params }: { params: { slug: string }
           )}
 
           {project.stack && project.stack.length > 0 && (
-            <div className="mb-6">
-              <span className="font-medium text-sm text-zinc-700">Stack: </span>
-              <span className="text-sm text-zinc-600">{project.stack.join(', ')}</span>
+            <div className="text-sm text-muted-foreground">
+              <span className="font-semibold text-foreground/80">Stack:</span> {project.stack.join(', ')}
             </div>
           )}
 
-          <div className="flex gap-4">
+          <div className="flex flex-wrap gap-3">
             {project.github && (
               <a
                 href={project.github}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="px-4 py-2 rounded-md border border-zinc-300 text-sm hover:bg-zinc-50"
+                className={buttonClasses({ variant: 'outline' })}
               >
                 View on GitHub
               </a>
@@ -85,7 +88,7 @@ export default async function ProjectPage({ params }: { params: { slug: string }
                 href={project.demo}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="px-4 py-2 rounded-md bg-zinc-900 text-white text-sm hover:bg-zinc-800"
+                className={buttonClasses({ variant: 'default' })}
               >
                 Live Demo
               </a>
@@ -93,7 +96,7 @@ export default async function ProjectPage({ params }: { params: { slug: string }
           </div>
         </header>
 
-        <div className="prose prose-zinc max-w-none">
+        <div className="mt-10">
           <MdxContent source={mdxSource} />
         </div>
       </article>

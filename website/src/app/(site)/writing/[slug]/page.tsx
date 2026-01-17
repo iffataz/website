@@ -37,13 +37,16 @@ export default async function PostPage({ params }: { params: { slug: string } })
   const mdxSource = await serializeMdx(post.content)
 
   return (
-    <Container className="py-12">
+    <Container className="py-16">
       <article>
-        <header className="mb-8">
-          <h1 className="text-4xl font-bold tracking-tight mb-4">{post.title}</h1>
-          <p className="text-xl text-zinc-600 mb-6">{post.description}</p>
-          
-          <div className="flex flex-wrap gap-4 text-sm text-zinc-600 mb-4">
+        <header className="space-y-6">
+          <p className="text-xs font-semibold uppercase tracking-[0.35em] text-muted-foreground">Writing</p>
+          <div>
+            <h1 className="text-4xl font-semibold tracking-tight font-serif sm:text-5xl">{post.title}</h1>
+            <p className="mt-4 text-lg text-muted-foreground">{post.description}</p>
+          </div>
+
+          <div className="flex flex-wrap gap-6 text-sm text-muted-foreground">
             <time>{post.date}</time>
           </div>
 
@@ -56,7 +59,7 @@ export default async function PostPage({ params }: { params: { slug: string } })
           )}
         </header>
 
-        <div className="prose prose-zinc max-w-none">
+        <div className="mt-10">
           <MdxContent source={mdxSource} />
         </div>
       </article>

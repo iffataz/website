@@ -13,15 +13,18 @@ export default function WritingPage() {
   const posts = getAllPosts()
 
   return (
-    <Container className="py-12">
-      <div className="mb-12">
-        <h1 className="text-4xl font-bold tracking-tight mb-4">Writing</h1>
-        <p className="text-lg text-zinc-600">
+    <Container className="py-16">
+      <div className="mb-10 max-w-2xl">
+        <p className="text-xs font-semibold uppercase tracking-[0.35em] text-muted-foreground">Writing</p>
+        <h1 className="mt-3 text-4xl font-semibold tracking-tight font-serif sm:text-5xl">
+          Notes on building.
+        </h1>
+        <p className="mt-5 text-lg text-muted-foreground">
           Articles, tutorials, and thoughts on software development, data science, and web technologies.
         </p>
       </div>
 
-      <div className="space-y-4">
+      <div className="grid gap-6 lg:grid-cols-2">
         {posts.map((post) => (
           <PostCard
             key={post.slug}
