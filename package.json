@@ -1,0 +1,12 @@
+{
+  "name": "website-root",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "cd website && npm run dev",
+    "build": "cd website && npm run build",
+    "start": "cd website && npm start",
+    "lint": "cd website && npm run lint",
+    "install": "cd website && npm install"
+  }
+}
