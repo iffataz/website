@@ -1,0 +1,37 @@
+---
+title: Server Components vs Client Components in React
+description: Understanding when to use Server Components and when to reach for Client Components in React applications
+date: 2024-01-20
+tags: [React, Next.js, Performance]
+published: true
+---
+
+React Server Components represent a significant shift in how we build React applications. They allow us to render components on the server, reducing client-side JavaScript and improving performance.
+
+## What Are Server Components?
+
+Server Components run exclusively on the server. They can:
+
+- Access server-side resources directly (databases, file systems, APIs)
+- Reduce the amount of JavaScript sent to the client
+- Improve initial page load times
+
+## When to Use Client Components
+
+Use Client Components when you need:
+
+- Interactivity (event handlers, state, effects)
+- Browser APIs (localStorage, window, etc.)
+- Real-time updates (WebSockets, polling)
+
+## Making the Choice
+
+The key is to default to Server Components and only use Client Components when necessary. This ensures you're sending minimal JavaScript to the client while still maintaining interactivity where needed.
+
+Here's a quick rule of thumb: if your component doesn't need React hooks, event handlers, or browser APIs, it can probably be a Server Component.
+
+## Performance Benefits
+
+By using Server Components as the default, you can significantly reduce your bundle size. This is especially important for content-heavy sites where most of the page is static.
+
+The React team designed Server Components to work seamlessly with the existing React mental model, making it easy to adopt gradually in your applications.
