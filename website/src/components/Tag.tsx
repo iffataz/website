@@ -1,7 +1,5 @@
+import { Badge } from '@/src/components/ui/badge'
+
 export function Tag({ children }: { children: React.ReactNode }) {
-  return (
-    <span className="inline-block px-2.5 py-0.5 text-xs font-medium bg-zinc-100 text-zinc-700 rounded-md">
-      {children}
-    </span>
-  )
+  return <Badge variant="secondary">{children}</Badge>
 }

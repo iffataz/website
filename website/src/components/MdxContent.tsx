@@ -3,24 +3,34 @@
 import { MDXRemote, MDXRemoteSerializeResult } from 'next-mdx-remote'
 
 const components = {
-  h1: (props: any) => <h1 className="text-3xl font-bold mt-8 mb-4" {...props} />,
-  h2: (props: any) => <h2 className="text-2xl font-bold mt-6 mb-3" {...props} />,
-  h3: (props: any) => <h3 className="text-xl font-semibold mt-4 mb-2" {...props} />,
-  p: (props: any) => <p className="mb-4 leading-relaxed" {...props} />,
-  ul: (props: any) => <ul className="list-disc list-inside mb-4 space-y-2" {...props} />,
-  ol: (props: any) => <ol className="list-decimal list-inside mb-4 space-y-2" {...props} />,
+  h1: (props: any) => (
+    <h1 className="font-serif text-3xl sm:text-4xl font-semibold mt-8 mb-4" {...props} />
+  ),
+  h2: (props: any) => (
+    <h2 className="font-serif text-2xl sm:text-3xl font-semibold mt-6 mb-3" {...props} />
+  ),
+  h3: (props: any) => (
+    <h3 className="font-serif text-xl font-semibold mt-4 mb-2" {...props} />
+  ),
+  p: (props: any) => <p className="mb-4 leading-relaxed text-muted-foreground" {...props} />,
+  ul: (props: any) => (
+    <ul className="list-disc list-inside mb-4 space-y-2 text-muted-foreground" {...props} />
+  ),
+  ol: (props: any) => (
+    <ol className="list-decimal list-inside mb-4 space-y-2 text-muted-foreground" {...props} />
+  ),
   li: (props: any) => <li className="ml-4" {...props} />,
   a: (props: any) => (
-    <a className="text-blue-600 hover:text-blue-800 underline" {...props} />
+    <a className="text-primary underline underline-offset-4 hover:text-primary/80" {...props} />
   ),
   code: (props: any) => (
-    <code className="bg-zinc-100 px-1.5 py-0.5 rounded text-sm" {...props} />
+    <code className="rounded bg-muted px-1.5 py-0.5 text-sm text-foreground" {...props} />
   ),
   pre: (props: any) => (
-    <pre className="bg-zinc-900 text-zinc-100 p-4 rounded-lg overflow-x-auto mb-4" {...props} />
+    <pre className="mb-4 overflow-x-auto rounded-2xl bg-foreground px-5 py-4 text-sm text-background" {...props} />
   ),
   blockquote: (props: any) => (
-    <blockquote className="border-l-4 border-zinc-300 pl-4 italic my-4" {...props} />
+    <blockquote className="my-4 border-l-4 border-primary/30 pl-4 italic text-muted-foreground" {...props} />
   ),
 }
 
