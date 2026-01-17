@@ -1,36 +1,136 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Personal Website
+
+A fast, SEO-first personal website built with Next.js App Router, TypeScript, and MDX.
+
+## Features
+
+- ✅ Next.js 16 with App Router
+- ✅ TypeScript
+- ✅ MDX content system
+- ✅ SEO optimized (metadata, sitemap, robots.txt, RSS feed)
+- ✅ Server Components by default
+- ✅ Tailwind CSS for styling
+- ✅ Clean, minimal design
 
 ## Getting Started
 
-First, run the development server:
+### Prerequisites
+
+- Node.js 18+ and npm
+
+### Installation
+
+1. Navigate to the website directory:
+```bash
+cd website
+```
+
+2. Install dependencies:
+```bash
+npm install
+```
+
+### Development
+
+Run the development server:
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000) in your browser.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### Build
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Create a production build:
 
-## Learn More
+```bash
+npm run build
+```
 
-To learn more about Next.js, take a look at the following resources:
+Start the production server:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```bash
+npm start
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Project Structure
 
-## Deploy on Vercel
+```
+website/
+├── src/
+│   ├── app/              # Next.js App Router pages
+│   │   ├── (site)/       # Route group for main pages
+│   │   │   ├── page.tsx  # Homepage
+│   │   │   ├── projects/ # Projects pages
+│   │   │   ├── writing/  # Blog posts
+│   │   │   ├── about/    # About page
+│   │   │   └── now/      # Now page
+│   │   ├── api/          # API routes (RSS feed)
+│   │   ├── layout.tsx    # Root layout
+│   │   ├── sitemap.ts    # Sitemap generator
+│   │   └── robots.ts     # Robots.txt
+│   ├── components/       # Reusable React components
+│   ├── content/         # MDX content files
+│   │   ├── projects/     # Project case studies
+│   │   └── writing/      # Blog posts
+│   └── lib/              # Utility functions
+│       ├── content/      # Content loaders
+│       └── seo/          # SEO helpers
+└── public/               # Static assets
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Adding Content
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+### Projects
+
+Create a new `.mdx` file in `src/content/projects/` with frontmatter:
+
+```mdx
+---
+title: Project Name
+description: Short description
+date: 2024-01-15
+tags: [Tag1, Tag2]
+role: Your Role
+stack: [Tech1, Tech2]
+github: https://github.com/...
+demo: https://demo-url.com
+featured: true
+---
+
+Your project content here...
+```
+
+### Blog Posts
+
+Create a new `.mdx` file in `src/content/writing/` with frontmatter:
+
+```mdx
+---
+title: Post Title
+description: Post description
+date: 2024-01-15
+tags: [Tag1, Tag2]
+published: true
+---
+
+Your blog post content here...
+```
+
+## Routes
+
+- `/` - Homepage with featured projects and latest posts
+- `/projects` - All projects
+- `/projects/[slug]` - Individual project pages
+- `/writing` - All blog posts
+- `/writing/[slug]` - Individual blog post pages
+- `/about` - About page
+- `/now` - Now page
+- `/api/rss` - RSS feed
+- `/sitemap.xml` - Sitemap
+- `/robots.txt` - Robots.txt
+
+## License
+
+Private project
