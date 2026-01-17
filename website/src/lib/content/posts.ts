@@ -19,7 +19,7 @@ export function getAllPosts(): Post[] {
         slug,
         title: data.title,
         description: data.description,
-        date: data.date,
+        date: data.date ? String(data.date) : '',
         tags: data.tags || [],
         published: data.published !== false,
         content,

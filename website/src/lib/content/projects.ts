@@ -19,7 +19,7 @@ export function getAllProjects(): Project[] {
         slug,
         title: data.title,
         description: data.description,
-        date: data.date,
+        date: data.date ? String(data.date) : '',
         tags: data.tags || [],
         role: data.role,
         stack: data.stack || [],
