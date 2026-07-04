@@ -1,6 +1,5 @@
 import './globals.css'
-import { Navbar } from '@/src/components/Navbar'
-import { Footer } from '@/src/components/Footer'
+import { PageShell } from '@/src/components/PageShell'
 import { Instrument_Sans, IBM_Plex_Mono } from 'next/font/google'
 
 const sans = Instrument_Sans({
@@ -24,9 +23,7 @@ export default function RootLayout({
       <body
         className={`${sans.variable} ${mono.variable} min-h-screen bg-paper font-sans text-ink antialiased`}
       >
-        <Navbar />
-        <main>{children}</main>
-        <Footer />
+        <PageShell>{children}</PageShell>
       </body>
     </html>
   )
