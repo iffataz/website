@@ -1,5 +1,6 @@
 import { LedgerRow } from '@/src/components/LedgerRow'
 import { MonoLabel } from '@/src/components/MonoLabel'
+import { Reveal } from '@/src/components/Reveal'
 import { getAllProjects } from '@/src/lib/content/projects'
 import { createMetadata } from '@/src/lib/seo/metadata'
 import { siteConfig } from '@/src/lib/site'
@@ -19,21 +20,23 @@ export default function HomePage() {
         <MonoLabel className="mt-6 block">{siteConfig.status}</MonoLabel>
       </section>
 
-      <section className="mt-16" aria-label="Projects">
-        <div className="border-t border-rule">
-          {projects.map((project) => (
-            <LedgerRow
-              key={project.slug}
-              index={project.order}
-              href={`/projects/${project.slug}`}
-              name={project.title}
-              description={project.description}
-              stack={project.stack}
-              year={project.year}
-            />
-          ))}
-        </div>
-      </section>
+      <Reveal>
+        <section className="mt-16" aria-label="Projects">
+          <div className="border-t border-rule">
+            {projects.map((project) => (
+              <LedgerRow
+                key={project.slug}
+                index={project.order}
+                href={`/projects/${project.slug}`}
+                name={project.title}
+                description={project.description}
+                stack={project.stack}
+                year={project.year}
+              />
+            ))}
+          </div>
+        </section>
+      </Reveal>
     </div>
   )
 }
