@@ -1,63 +1,54 @@
-import { Container } from '@/src/components/Container'
-import { Card, CardDescription, CardHeader, CardTitle } from '@/src/components/ui/card'
-import { buttonClasses } from '@/src/components/ui/button'
+import { MonoLabel } from '@/src/components/MonoLabel'
 import { createMetadata } from '@/src/lib/seo/metadata'
+import { siteConfig } from '@/src/lib/site'
 
 export const metadata = createMetadata({
   title: 'About',
-  description: 'Learn more about Iffat Abdul Azeez, a Computer Science student building data-driven products and full-stack software.',
+  description: 'Who I am, what I work with, and what I am looking for.',
   path: '/about',
 })
 
+// DRAFT — mined from the project repos; Iffat review before merge.
+const toolkit = ['TypeScript', 'React / Next.js', 'Node.js', 'Python', 'SQL']
+
 export default function AboutPage() {
   return (
-    <Container className="py-16">
-      <div className="max-w-3xl">
-        <p className="text-xs font-semibold uppercase tracking-[0.35em] text-muted-foreground">About</p>
-        <h1 className="mt-3 text-4xl font-semibold tracking-tight font-serif sm:text-5xl">Building with data.</h1>
-        <p className="mt-6 text-lg text-muted-foreground">
-          I'm a Computer Science student passionate about building data-driven products, energy analytics,
-          and full-stack software. I enjoy translating complex systems into clear, useful experiences.
-        </p>
+    <div className="max-w-xl pt-14">
+      <h1 className="text-3xl font-medium tracking-tight">About</h1>
 
-        <div className="mt-10 grid gap-4">
-          <Card>
-            <CardHeader>
-              <CardTitle className="text-lg">Full-stack Developer</CardTitle>
-              <CardDescription>
-                Building modern web applications with React, Next.js, and TypeScript.
-              </CardDescription>
-            </CardHeader>
-          </Card>
-          <Card>
-            <CardHeader>
-              <CardTitle className="text-lg">Data Science Enthusiast</CardTitle>
-              <CardDescription>
-                Exploring machine learning and analytics to extract insight from complex datasets.
-              </CardDescription>
-            </CardHeader>
-          </Card>
+      {/* DRAFT — Iffat review before merge. Facts limited to what is verifiable
+          today; hackathons/internships/coursework are added in the content
+          phase from the resume. */}
+      <p className="mt-6 leading-relaxed">
+        I like building small, complete tools and seeing them through — from
+        first commit to something another person can actually use. The projects
+        on this site are all real and all mine. I studied computer science at
+        Monash University.
+      </p>
+
+      <section className="mt-12">
+        <h2 className="border-b border-rule pb-2 text-xl font-medium tracking-tight">
+          Toolkit
+        </h2>
+        <div className="mt-4 flex flex-wrap gap-x-4 gap-y-2">
+          {toolkit.map((tool) => (
+            <MonoLabel key={tool}>{tool}</MonoLabel>
+          ))}
         </div>
+      </section>
 
-        <div className="mt-10 flex flex-wrap gap-3">
-          <a
-            href="https://github.com/iffataz"
-            target="_blank"
-            rel="noopener noreferrer"
-            className={buttonClasses({ variant: 'outline' })}
-          >
-            GitHub
-          </a>
+      {siteConfig.resumeAvailable && (
+        <section className="mt-12">
           <a
             href="/resume.pdf"
-            className={buttonClasses({ variant: 'secondary' })}
             target="_blank"
             rel="noopener noreferrer"
+            className="font-mono text-xs text-accent hover:underline"
           >
-            Resume
+            resume (pdf) ↗
           </a>
-        </div>
-      </div>
-    </Container>
+        </section>
+      )}
+    </div>
   )
 }
