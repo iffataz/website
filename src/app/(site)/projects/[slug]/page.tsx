@@ -41,7 +41,7 @@ export default async function ProjectPage({
     <article className="pt-14">
       <header className="border-b border-rule pb-10">
         <div className="flex items-baseline justify-between">
-          <MonoLabel>{String(project.order ?? 0).padStart(2, '0')}</MonoLabel>
+          <MonoLabel>{String(project.order).padStart(2, '0')}</MonoLabel>
           <MonoLabel>{project.year}</MonoLabel>
         </div>
         <h1 className="mt-5 text-3xl font-medium tracking-tight sm:text-4xl">

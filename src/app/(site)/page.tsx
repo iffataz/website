@@ -21,15 +21,15 @@ export default function HomePage() {
 
       <section className="mt-16" aria-label="Projects">
         <div className="border-t border-rule">
-          {projects.map((project, i) => (
+          {projects.map((project) => (
             <LedgerRow
               key={project.slug}
-              index={project.order ?? i + 1}
+              index={project.order}
               href={`/projects/${project.slug}`}
               name={project.title}
               description={project.description}
               stack={project.stack}
-              year={project.year ?? ''}
+              year={project.year}
             />
           ))}
         </div>

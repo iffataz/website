@@ -2,15 +2,11 @@ export interface Project {
   slug: string
   title: string
   description: string
-  date: string
-  tags: string[]
-  role: string
+  year: string
+  order: number
   stack: string[]
   github?: string
   demo?: string
-  featured: boolean
-  year?: string
-  order?: number
   content: string
 }
 

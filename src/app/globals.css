@@ -8,28 +8,6 @@
   --ink-muted: #6f6455;
   --rule: #ddd3c4;
   --accent: #2545c8;
-
-  /* Legacy tokens — consumed by pages not yet rewritten. Removed in the cleanup task. */
-  --background: #f6f1e9;
-  --foreground: #1e1913;
-  --card: #ffffff;
-  --card-foreground: #1e1913;
-  --popover: #ffffff;
-  --popover-foreground: #1e1913;
-  --primary: #2545c8;
-  --primary-foreground: #f6f1e9;
-  --secondary: #efe7da;
-  --secondary-foreground: #1e1913;
-  --muted: #efe7da;
-  --muted-foreground: #6f6455;
-  --accent-legacy: #efe7da;
-  --accent-foreground: #1e1913;
-  --destructive: #b42318;
-  --destructive-foreground: #fef2f2;
-  --border: #ddd3c4;
-  --input: #ddd3c4;
-  --ring: #2545c8;
-  --radius: 0.9rem;
 }
 
 @theme inline {
@@ -42,27 +20,6 @@
   --color-accent: var(--accent);
   --font-sans: var(--font-instrument-sans);
   --font-mono: var(--font-plex-mono);
-
-  /* Legacy mappings — removed in the cleanup task. */
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --color-card: var(--card);
-  --color-card-foreground: var(--card-foreground);
-  --color-popover: var(--popover);
-  --color-popover-foreground: var(--popover-foreground);
-  --color-primary: var(--primary);
-  --color-primary-foreground: var(--primary-foreground);
-  --color-secondary: var(--secondary);
-  --color-secondary-foreground: var(--secondary-foreground);
-  --color-muted: var(--muted);
-  --color-muted-foreground: var(--muted-foreground);
-  --color-accent-foreground: var(--accent-foreground);
-  --color-destructive: var(--destructive);
-  --color-destructive-foreground: var(--destructive-foreground);
-  --color-border: var(--border);
-  --color-input: var(--input);
-  --color-ring: var(--ring);
-  --radius: var(--radius);
 }
 
 @layer base {

@@ -19,15 +19,15 @@ export default function ProjectsPage() {
         <MonoLabel>{String(projects.length).padStart(2, '0')} entries</MonoLabel>
       </div>
       <div className="mt-10 border-t border-rule">
-        {projects.map((project, i) => (
+        {projects.map((project) => (
           <LedgerRow
             key={project.slug}
-            index={project.order ?? i + 1}
+            index={project.order}
             href={`/projects/${project.slug}`}
             name={project.title}
             description={project.description}
             stack={project.stack}
-            year={project.year ?? ''}
+            year={project.year}
           />
         ))}
       </div>
