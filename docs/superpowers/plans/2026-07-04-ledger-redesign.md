@@ -900,7 +900,7 @@ git commit -m "feat(about): ledger about page with draft bio and toolkit"
 - Delete: `src/app/(site)/writing/page.tsx`, `src/app/(site)/writing/[slug]/page.tsx`, `src/app/(site)/now/page.tsx`, `src/app/api/rss/route.ts`, `src/content/writing/getting-started-with-mdx.mdx`, `src/content/writing/server-components-vs-client-components.mdx`, `src/components/ProjectCard.tsx`, `src/components/PostCard.tsx`, `src/components/Tag.tsx`, `src/components/Container.tsx`, `src/components/ui/badge.tsx`, `src/components/ui/button.tsx`, `src/components/ui/card.tsx`, `src/lib/utils.ts`
 - Create: `src/content/writing/.gitkeep`
 - Modify: `src/app/sitemap.ts`, `src/lib/content/types.ts`, `src/lib/content/projects.ts`, `src/app/globals.css`
-- Keep untouched: `src/lib/content/posts.ts`, `src/lib/content/mdx.tsx` (writing pipeline retained per spec), `src/app/robots.ts`
+- Keep untouched: `src/lib/content/posts.ts` (writing pipeline retained per spec), `src/app/robots.ts`. (`src/lib/content/mdx.tsx` was already removed in Task 5: MDX now renders server-side via `next-mdx-remote/rsc` inside `MdxContent` — a Next 16.1.1 prerender bug crashes builds when a `'use client'` MDXRemote descends from a page that awaits `params`.)
 
 **Interfaces:**
 - Consumes: everything above already rewritten (Tasks 4–6) so nothing imports the deleted files.
