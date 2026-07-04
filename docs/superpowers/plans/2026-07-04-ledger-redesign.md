@@ -16,7 +16,7 @@
 - Type: Instrument Sans (headings + body), IBM Plex Mono (all metadata: indexes, dates, stack tags, status line), via `next/font` with fallbacks.
 - Light mode only. No gradients, no shadows, no uppercase-tracked eyebrow labels, no emoji, no card grids, no page-load animations.
 - All motion respects `prefers-reduced-motion`. Everything keyboard-navigable with visible focus states.
-- Status line copy, verbatim: `now: cs student · seeking internships`
+- Status line copy (DRAFT — Iffat review): `now: building · open to software engineering roles`. Iffat is a Monash CS graduate — no copy anywhere may use student/new-grad framing ("cs student", "seeking internships", "recent grad"); the degree is an About-page fact, never the headline.
 - Featured projects, ledger order 01–05: IT-MATE, Atlas, Ask-My-Docs, Decora, recipe-vault. Slugs: `it-mate`, `atlas`, `ask-my-docs`, `decora`, `recipe-vault`.
 - Imports use the existing `@/src/...` alias convention.
 - **Tailwind v4 builds fail on unknown utility classes.** Old theme tokens (`background`, `foreground`, `muted-foreground`, `border`, `primary`, …) must remain in `globals.css` until Task 7 deletes their last consumers.
@@ -214,8 +214,8 @@ export const siteConfig = {
   name: 'Iffat Abdul Azeez',
   url: 'https://iffataz.dev',
   // DRAFT — Iffat review before merge
-  positioning: 'Computer science student who builds and ships real software.',
-  status: 'now: cs student · seeking internships',
+  positioning: 'I build and ship complete software.',
+  status: 'now: building · open to software engineering roles',
   // Filled in the content phase once links are verified to resolve (LinkedIn, email, GitHub).
   contacts: [] as { label: string; href: string }[],
   // Flipped to true once the real resume PDF lands in public/.
@@ -840,10 +840,10 @@ export default function AboutPage() {
           today; hackathons/internships/coursework are added in the content
           phase from the resume. */}
       <p className="mt-6 leading-relaxed">
-        I&apos;m a computer science student. I like building small, complete
-        tools and seeing them through — from first commit to something another
-        person can actually use. The projects on this site are all real and all
-        mine.
+        I like building small, complete tools and seeing them through — from
+        first commit to something another person can actually use. The projects
+        on this site are all real and all mine. I studied computer science at
+        Monash University.
       </p>
 
       <section className="mt-12">

@@ -16,7 +16,7 @@ The current site is a shadcn-styled template with fabricated placeholder content
 
 Four surfaces:
 
-1. **Home** — name, one positioning line, a monospace status line ("now: cs student · seeking internships"), then the indexed project ledger (rows 01–05) as the centerpiece. Contact links in the footer.
+1. **Home** — name, one positioning line, a monospace status line ("now: building · open to software engineering roles" — draft), then the indexed project ledger (rows 01–05) as the centerpiece. Contact links in the footer. (Update 2026-07-04: Iffat is a Monash CS graduate — no student/new-grad framing anywhere; the degree is an About-page fact only.)
 2. **Projects** (`/projects`) — the full ledger. Each row: index, name, one-line description, stack tags in mono, year.
 3. **Project detail** (`/projects/[slug]`) — a build-log narrative per project: what it is, why it was built, 2–3 real technical decisions, and what would be done differently. MDX-sourced.
 4. **About** (`/about`) — short first-person bio, non-code work (hackathons / internships / coursework), toolkit, resume download.
