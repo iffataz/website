@@ -1,29 +1,49 @@
 @import "tailwindcss";
 
 :root {
-  --background: #f8f6f2;
-  --foreground: #1b232b;
+  /* Ledger system */
+  --paper: #f6f1e9;
+  --paper-warm: #efe7da;
+  --ink: #1e1913;
+  --ink-muted: #6f6455;
+  --rule: #ddd3c4;
+  --accent: #2545c8;
+
+  /* Legacy tokens — consumed by pages not yet rewritten. Removed in the cleanup task. */
+  --background: #f6f1e9;
+  --foreground: #1e1913;
   --card: #ffffff;
-  --card-foreground: #1b232b;
+  --card-foreground: #1e1913;
   --popover: #ffffff;
-  --popover-foreground: #1b232b;
-  --primary: #0e4c7a;
-  --primary-foreground: #f8fafc;
-  --secondary: #efe9df;
-  --secondary-foreground: #2c3a44;
-  --muted: #f1ede6;
-  --muted-foreground: #6b7681;
-  --accent: #f4d9bf;
-  --accent-foreground: #2a2f35;
+  --popover-foreground: #1e1913;
+  --primary: #2545c8;
+  --primary-foreground: #f6f1e9;
+  --secondary: #efe7da;
+  --secondary-foreground: #1e1913;
+  --muted: #efe7da;
+  --muted-foreground: #6f6455;
+  --accent-legacy: #efe7da;
+  --accent-foreground: #1e1913;
   --destructive: #b42318;
   --destructive-foreground: #fef2f2;
-  --border: #e4ded5;
-  --input: #e4ded5;
-  --ring: #8bb9d4;
+  --border: #ddd3c4;
+  --input: #ddd3c4;
+  --ring: #2545c8;
   --radius: 0.9rem;
 }
 
 @theme inline {
+  /* Ledger system */
+  --color-paper: var(--paper);
+  --color-paper-warm: var(--paper-warm);
+  --color-ink: var(--ink);
+  --color-ink-muted: var(--ink-muted);
+  --color-rule: var(--rule);
+  --color-accent: var(--accent);
+  --font-sans: var(--font-instrument-sans);
+  --font-mono: var(--font-plex-mono);
+
+  /* Legacy mappings — removed in the cleanup task. */
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-card: var(--card);
@@ -36,7 +56,6 @@
   --color-secondary-foreground: var(--secondary-foreground);
   --color-muted: var(--muted);
   --color-muted-foreground: var(--muted-foreground);
-  --color-accent: var(--accent);
   --color-accent-foreground: var(--accent-foreground);
   --color-destructive: var(--destructive);
   --color-destructive-foreground: var(--destructive-foreground);
@@ -44,41 +63,37 @@
   --color-input: var(--input);
   --color-ring: var(--ring);
   --radius: var(--radius);
-  --font-sans: var(--font-sans-next);
-  --font-serif: var(--font-serif-next);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0f1418;
-    --foreground: #e6edf3;
-    --card: #121a20;
-    --card-foreground: #e6edf3;
-    --popover: #121a20;
-    --popover-foreground: #e6edf3;
-    --primary: #7cc0f3;
-    --primary-foreground: #0f1418;
-    --secondary: #1b242b;
-    --secondary-foreground: #d5dde4;
-    --muted: #1b242b;
-    --muted-foreground: #9aa6b2;
-    --accent: #2c3a44;
-    --accent-foreground: #e6edf3;
-    --border: #25313a;
-    --input: #25313a;
-    --ring: #7cc0f3;
-  }
 }
 
 @layer base {
   * {
-    border-color: var(--border);
+    border-color: var(--rule);
   }
 
   body {
-    background-color: var(--background);
-    color: var(--foreground);
-    font-family: var(--font-sans), system-ui, sans-serif;
+    background-color: var(--paper);
+    color: var(--ink);
+    font-family: var(--font-instrument-sans), system-ui, sans-serif;
     text-rendering: optimizeLegibility;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+  }
+
+  ::selection {
+    background: var(--accent);
+    color: var(--paper);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
   }
 }
