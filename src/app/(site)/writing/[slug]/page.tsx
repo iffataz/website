@@ -2,7 +2,6 @@ import { notFound } from 'next/navigation'
 import { Container } from '@/src/components/Container'
 import { Tag } from '@/src/components/Tag'
 import { getPostBySlug, getAllPosts } from '@/src/lib/content/posts'
-import { serializeMdx } from '@/src/lib/content/mdx'
 import { MdxContent } from '@/src/components/MdxContent'
 import { createMetadata } from '@/src/lib/seo/metadata'
 
@@ -34,8 +33,6 @@ export default async function PostPage({ params }: { params: { slug: string } })
     notFound()
   }
 
-  const mdxSource = await serializeMdx(post.content)
-
   return (
     <Container className="py-16">
       <article>
@@ -60,7 +57,7 @@ export default async function PostPage({ params }: { params: { slug: string } })
         </header>
 
         <div className="mt-10">
-          <MdxContent source={mdxSource} />
+          <MdxContent source={post.content} />
         </div>
       </article>
     </Container>

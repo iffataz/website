@@ -1,21 +1,20 @@
 import { notFound } from 'next/navigation'
-import { Container } from '@/src/components/Container'
-import { Tag } from '@/src/components/Tag'
-import { buttonClasses } from '@/src/components/ui/button'
-import { getProjectBySlug, getAllProjects } from '@/src/lib/content/projects'
-import { serializeMdx } from '@/src/lib/content/mdx'
+import { MonoLabel } from '@/src/components/MonoLabel'
 import { MdxContent } from '@/src/components/MdxContent'
+import { getAllProjects, getProjectBySlug } from '@/src/lib/content/projects'
 import { createMetadata } from '@/src/lib/seo/metadata'
 
 export async function generateStaticParams() {
-  const projects = getAllProjects()
-  return projects.map((project) => ({
-    slug: project.slug,
-  }))
+  return getAllProjects().map((project) => ({ slug: project.slug }))
 }
 
-export async function generateMetadata({ params }: { params: { slug: string } }) {
-  const project = getProjectBySlug(params.slug)
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ slug: string }>
+}) {
+  const { slug } = await params
+  const project = getProjectBySlug(slug)
   if (!project) return {}
 
   return createMetadata({
@@ -23,64 +22,47 @@ export async function generateMetadata({ params }: { params: { slug: string } })
     description: project.description,
     path: `/projects/${project.slug}`,
     type: 'article',
-    publishedTime: project.date,
-    tags: project.tags,
   })
 }
 
-export default async function ProjectPage({ params }: { params: { slug: string } }) {
-  const project = getProjectBySlug(params.slug)
+export default async function ProjectPage({
+  params,
+}: {
+  params: Promise<{ slug: string }>
+}) {
+  const { slug } = await params
+  const project = getProjectBySlug(slug)
 
   if (!project) {
     notFound()
   }
 
-  const mdxSource = await serializeMdx(project.content)
-
   return (
-    <Container className="py-16">
-      <article>
-        <header className="space-y-6">
-          <p className="text-xs font-semibold uppercase tracking-[0.35em] text-muted-foreground">Project</p>
-          <div>
-            <h1 className="text-4xl font-semibold tracking-tight font-serif sm:text-5xl">{project.title}</h1>
-            <p className="mt-4 text-lg text-muted-foreground">{project.description}</p>
-          </div>
-
-          <div className="flex flex-wrap gap-6 text-sm text-muted-foreground">
-            <div>
-              <span className="font-semibold text-foreground/80">Date:</span> {project.date}
-            </div>
-            {project.role && (
-              <div>
-                <span className="font-semibold text-foreground/80">Role:</span> {project.role}
-              </div>
-            )}
-          </div>
-
-          {project.tags.length > 0 && (
-            <div className="flex flex-wrap gap-2">
-              {project.tags.map((tag) => (
-                <Tag key={tag}>{tag}</Tag>
-              ))}
-            </div>
-          )}
-
-          {project.stack && project.stack.length > 0 && (
-            <div className="text-sm text-muted-foreground">
-              <span className="font-semibold text-foreground/80">Stack:</span> {project.stack.join(', ')}
-            </div>
-          )}
-
-          <div className="flex flex-wrap gap-3">
+    <article className="pt-14">
+      <header className="border-b border-rule pb-10">
+        <div className="flex items-baseline justify-between">
+          <MonoLabel>{String(project.order ?? 0).padStart(2, '0')}</MonoLabel>
+          <MonoLabel>{project.year}</MonoLabel>
+        </div>
+        <h1 className="mt-5 text-3xl font-medium tracking-tight sm:text-4xl">
+          {project.title}
+        </h1>
+        <p className="mt-3 max-w-xl text-lg text-ink-muted">{project.description}</p>
+        <div className="mt-6 flex flex-wrap gap-x-4 gap-y-1">
+          {project.stack.map((tag) => (
+            <MonoLabel key={tag}>{tag}</MonoLabel>
+          ))}
+        </div>
+        {(project.github || project.demo) && (
+          <div className="mt-6 flex gap-6 font-mono text-xs">
             {project.github && (
               <a
                 href={project.github}
                 target="_blank"
                 rel="noopener noreferrer"
-                className={buttonClasses({ variant: 'outline' })}
+                className="text-accent hover:underline"
               >
-                View on GitHub
+                github ↗
               </a>
             )}
             {project.demo && (
@@ -88,18 +70,17 @@ export default async function ProjectPage({ params }: { params: { slug: string }
                 href={project.demo}
                 target="_blank"
                 rel="noopener noreferrer"
-                className={buttonClasses({ variant: 'default' })}
+                className="text-accent hover:underline"
               >
-                Live Demo
+                live ↗
               </a>
             )}
           </div>
-        </header>
-
-        <div className="mt-10">
-          <MdxContent source={mdxSource} />
-        </div>
-      </article>
-    </Container>
+        )}
+      </header>
+      <div className="mt-10">
+        <MdxContent source={project.content} />
+      </div>
+    </article>
   )
 }
