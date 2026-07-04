@@ -1,58 +1,136 @@
-# Personal Website (Next.js) — Build Spec
+# Personal Website
 
-## Goal
-Build a fast, SEO-first personal website using Next.js App Router. The site is content-driven (MDX) and showcases Projects (case studies) and Writing (blog). Minimal JS, clean UI, scalable structure.
+A fast, SEO-first personal website built with Next.js App Router, TypeScript, and MDX.
 
-## Non-negotiables
-- Next.js App Router + TypeScript
-- Content-driven pages using MDX in /src/content
-- Server Components by default; use client components only when necessary
-- Excellent SEO: metadata, OpenGraph, sitemap, robots, RSS
-- Clean, minimal design with Tailwind
+## Features
+
+- ✅ Next.js 16 with App Router
+- ✅ TypeScript
+- ✅ MDX content system
+- ✅ SEO optimized (metadata, sitemap, robots.txt, RSS feed)
+- ✅ Server Components by default
+- ✅ Tailwind CSS for styling
+- ✅ Clean, minimal design
+
+## Getting Started
+
+### Prerequisites
+
+- Node.js 18+ and npm
+
+### Installation
+
+1. Navigate to the website directory:
+```bash
+cd website
+```
+
+2. Install dependencies:
+```bash
+npm install
+```
+
+### Development
+
+Run the development server:
+
+```bash
+npm run dev
+```
+
+Open [http://localhost:3000](http://localhost:3000) in your browser.
+
+### Build
+
+Create a production build:
+
+```bash
+npm run build
+```
+
+Start the production server:
+
+```bash
+npm start
+```
+
+## Project Structure
+
+```
+website/
+├── src/
+│   ├── app/              # Next.js App Router pages
+│   │   ├── (site)/       # Route group for main pages
+│   │   │   ├── page.tsx  # Homepage
+│   │   │   ├── projects/ # Projects pages
+│   │   │   ├── writing/  # Blog posts
+│   │   │   ├── about/    # About page
+│   │   │   └── now/      # Now page
+│   │   ├── api/          # API routes (RSS feed)
+│   │   ├── layout.tsx    # Root layout
+│   │   ├── sitemap.ts    # Sitemap generator
+│   │   └── robots.ts     # Robots.txt
+│   ├── components/       # Reusable React components
+│   ├── content/         # MDX content files
+│   │   ├── projects/     # Project case studies
+│   │   └── writing/      # Blog posts
+│   └── lib/              # Utility functions
+│       ├── content/      # Content loaders
+│       └── seo/          # SEO helpers
+└── public/               # Static assets
+```
+
+## Adding Content
+
+### Projects
+
+Create a new `.mdx` file in `src/content/projects/` with frontmatter:
+
+```mdx
+---
+title: Project Name
+description: Short description
+date: 2024-01-15
+tags: [Tag1, Tag2]
+role: Your Role
+stack: [Tech1, Tech2]
+github: https://github.com/...
+demo: https://demo-url.com
+featured: true
+---
+
+Your project content here...
+```
+
+### Blog Posts
+
+Create a new `.mdx` file in `src/content/writing/` with frontmatter:
+
+```mdx
+---
+title: Post Title
+description: Post description
+date: 2024-01-15
+tags: [Tag1, Tag2]
+published: true
+---
+
+Your blog post content here...
+```
 
 ## Routes
-- `/` Home: hero + featured projects + latest writing
-- `/projects` list from content/projects
-- `/projects/[slug]` MDX case study page
-- `/writing` list from content/writing
-- `/writing/[slug]` MDX blog post page
-- `/about` about + experience + links
-- `/resume` link to /public/resume.pdf
-- `/now` optional “what I’m doing now”
 
-## Folder structure
-Use this structure:
-- `src/app/(site)` for pages and layout
-- `src/components` for reusable UI and sections
-- `src/content/projects` and `src/content/writing` for MDX
-- `src/lib/content` for content loaders and MDX utilities
-- `src/lib/seo` for metadata helpers
-- `public/resume.pdf` for downloadable resume
+- `/` - Homepage with featured projects and latest posts
+- `/projects` - All projects
+- `/projects/[slug]` - Individual project pages
+- `/writing` - All blog posts
+- `/writing/[slug]` - Individual blog post pages
+- `/about` - About page
+- `/now` - Now page
+- `/api/rss` - RSS feed
+- `/sitemap.xml` - Sitemap
+- `/robots.txt` - Robots.txt
 
-## Content contracts
-Each MDX file must have frontmatter fields.
-Projects:
-- title, description, date, tags, role, stack, github, demo, featured
-Writing:
-- title, description, date, tags, published
+## License
 
-## Rendering approach
-- Load MDX content at build time
-- Provide `getAllProjects()`, `getProjectBySlug()`, `getAllPosts()`, `getPostBySlug()`
-- Use `generateStaticParams()` for `[slug]` routes
-
-## UI requirements
-- Reusable components: ProjectCard, PostCard, Tag/Badge, Callout, CodeBlock
-- Minimal but premium layout: Container, Navbar, Footer
-- Typography-first design, accessible contrast
-
-## SEO requirements
-- Metadata per page
-- OpenGraph images (default is OK)
-- sitemap.ts and robots.ts
-- RSS feed at /api/rss
-
-## Deliverables
-- Implement the architecture above
-- Provide placeholder content with 2 projects and 2 posts
-- Ensure clean code, no unused dependencies, and consistent formatting
+Private project
