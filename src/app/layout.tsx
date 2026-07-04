@@ -2,7 +2,13 @@ import './globals.css'
 import { PageShell } from '@/src/components/PageShell'
 import { CommandPalette } from '@/src/components/CommandPalette'
 import { getAllProjects } from '@/src/lib/content/projects'
+import { siteConfig } from '@/src/lib/site'
 import { Instrument_Sans, IBM_Plex_Mono } from 'next/font/google'
+import type { Metadata } from 'next'
+
+export const metadata: Metadata = {
+  metadataBase: new URL(siteConfig.url),
+}
 
 const sans = Instrument_Sans({
   subsets: ['latin'],

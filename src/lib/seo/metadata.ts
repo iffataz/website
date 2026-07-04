@@ -1,4 +1,5 @@
 import { Metadata } from 'next'
+import { siteConfig } from '@/src/lib/site'
 
 interface MetadataOptions {
   title?: string
@@ -12,8 +13,8 @@ interface MetadataOptions {
 
 export function createMetadata(options: MetadataOptions = {}): Metadata {
   const {
-    title = 'Iffat Abdul Azeez',
-    description = 'Computer Science student building data-driven products, energy analytics, and full-stack software.',
+    title = siteConfig.name,
+    description = siteConfig.positioning,
     path = '',
     type = 'website',
     publishedTime,
@@ -21,10 +22,11 @@ export function createMetadata(options: MetadataOptions = {}): Metadata {
     tags = [],
   } = options
 
-  const url = `https://iffataz.dev${path}`
-  const siteName = 'Iffat Abdul Azeez'
+  const url = `${siteConfig.url}${path}`
+  const siteName = siteConfig.name
 
   return {
+    metadataBase: new URL(siteConfig.url),
     title: title === siteName ? title : `${title} | ${siteName}`,
     description,
     openGraph: {
