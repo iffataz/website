@@ -26,18 +26,14 @@ export function getAllProjects(): Project[] {
         github: data.github,
         demo: data.demo,
         featured: data.featured || false,
+        year: data.year ? String(data.year) : '',
+        order: data.order ?? 99,
         content,
       } as Project
     })
 
-  // Sort by date, most recent first
-  return allProjectsData.sort((a, b) => {
-    if (a.date < b.date) {
-      return 1
-    } else {
-      return -1
-    }
-  })
+  // Ledger order 01–05
+  return allProjectsData.sort((a, b) => (a.order ?? 99) - (b.order ?? 99))
 }
 
 export function getProjectBySlug(slug: string): Project | null {
@@ -57,6 +53,8 @@ export function getProjectBySlug(slug: string): Project | null {
       github: data.github,
       demo: data.demo,
       featured: data.featured || false,
+      year: data.year ? String(data.year) : '',
+      order: data.order ?? 99,
       content,
     } as Project
   } catch {

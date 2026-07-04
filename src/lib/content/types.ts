@@ -9,6 +9,8 @@ export interface Project {
   github?: string
   demo?: string
   featured: boolean
+  year?: string
+  order?: number
   content: string
 }
 
