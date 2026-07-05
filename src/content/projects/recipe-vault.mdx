@@ -7,5 +7,28 @@ stack: [Next.js, TypeScript, Prisma, PostgreSQL, NextAuth]
 github: https://github.com/iffataz/recipe-vault
 ---
 
-Write-up pending the content phase. Planned structure: what it is, why it was
-built, two or three real technical decisions, and what I would do differently.
+## What it is
+
+Recipe Vault is a full-stack recipe manager: sign up with email/password or Google, add recipes with ingredients, steps, an image, and tags, then find them again by title search or by clicking a tag. Each user only sees their own recipes: every query in `app/api/recipes/route.ts` filters on `authorId`. Images upload straight from the browser to S3 rather than through the app server.
+
+## Why I built it
+
+I wanted a small, complete CRUD app combining pieces I hadn't put together before: a real auth flow with two providers, direct-to-S3 uploads, and a relational schema with a proper many-to-many join instead of a denormalized tag list. The seed script (`prisma/seed.ts`) creates three real recipes and a demo login, which is the shape this was meant to be: usable, not just scaffolding.
+
+## Decisions that mattered
+
+### Presigned S3 uploads instead of routing images through the server
+
+`app/api/upload/route.ts` checks the session, validates the content type against `ALLOWED_TYPES`, then calls `generatePresignedUploadUrl` in `lib/s3.ts` for a 60-second presigned PUT URL. The browser uploads the file directly to S3 with that URL. The app server never touches the image bytes, only hands out permission to upload one specific key.
+
+### Tags as a real join table, queried case-insensitively
+
+`prisma/schema.prisma` models tags as `Tag` and a `RecipeTag` join table with a composite `@@id([recipeId, tagId])`, rather than a string array on `Recipe`. The tag filter in `app/api/recipes/route.ts` walks that relation with a case-insensitive match on `tag.name`, and saving a recipe uses `connectOrCreate` so an existing tag like "quick" is reused instead of duplicated.
+
+### JWT sessions with a Credentials provider alongside Google
+
+`lib/auth.ts` combines `CredentialsProvider` (email/password, checked against a bcrypt hash) and `GoogleProvider` under one `PrismaAdapter`, with JWT sessions. The `emailVerified` field was added to `User` in a later commit specifically because the NextAuth adapter required it: a sign the schema grew to match the auth library rather than being fully planned upfront.
+
+## What I would do differently
+
+There's no Prisma migrations folder in the repo, just `db:push` and `db:migrate` scripts, so schema history isn't captured beyond the git log. Ingredients and steps are stored as `Json` on `Recipe` instead of their own tables, fine for rendering a list but ruling out querying by individual ingredient later. There's also no automated test suite, so the auth flows and ownership checks are only verified by hand.

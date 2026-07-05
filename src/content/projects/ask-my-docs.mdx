@@ -7,5 +7,28 @@ stack: [Python, FastAPI, LangGraph, ChromaDB, Pydantic]
 github: https://github.com/iffataz/Ask-My-Docs
 ---
 
-Write-up pending the content phase. Planned structure: what it is, why it was
-built, two or three real technical decisions, and what I would do differently.
+## What it is
+
+Ask My Docs is, right now, a RAG backend: a FastAPI app with a LangGraph pipeline that routes a question, retrieves chunks from a Chroma vector store, grades whether those chunks are sufficient, rewrites the query and retries if not, then generates a cited answer. The only exposed endpoint today is `GET /health`. Document upload, chat, an MCP server, and a frontend are in the original brief but not built yet.
+
+## Why I built it
+
+I wanted a RAG pipeline that does more than retrieve once and hope, and LangGraph's `StateGraph` gave me an explicit way to model that as a graph. The brief (`ask-my-docs-brief.md`) describes a full Q&A app, but I built it in phases, backend first, with tests and a manual review at each step.
+
+## Decisions that mattered
+
+### A bounded self-correcting loop instead of retrieve-then-generate
+
+`grade_documents_node` asks the LLM whether the retrieved chunks are sufficient, and if not, `rewrite_query_node` rephrases the question and sends it back through `retrieve`. The loop can't run forever: `grade_documents_node` is the only place that flips `limited_context` to true once `rewrite_count` hits `max_rewrites` (2), and the routing function just reads that flag back. `test_rewrite_loop_is_bounded_at_max_rewrites` pins the behavior down.
+
+### Structured output for routing and grading, not string parsing
+
+`router_node` and `grade_documents_node` use `with_structured_output` against Pydantic models (`RouteDecision`, `GradeResult`), so a route or relevance grade comes back as a typed object instead of a string I'd have to parse.
+
+### Threading a `retrieval_attempted` flag through generate
+
+A manual review, logged in `MEMORY.md`, caught that `generate()`'s empty-docs branch couldn't tell "general question, retrieval never attempted" apart from "retrieval attempted, nothing relevant came back." Both left `cited_docs` empty. I added an explicit `retrieval_attempted` flag, a dedicated prompt for the second case, and a regression test, so the assistant doesn't say "no documents were needed" when the real answer is "the docs didn't have it."
+
+## What I would do differently
+
+I'd get the FastAPI `/documents` and `/chat` routes working before touching the brief's larger scope, since the graph is fully wired but nothing outside `/health` calls it yet. The embedder and LLM clients fall back to placeholder API keys so they can construct without live credentials, a deliberate short-term fix noted inline in `embedder.py` and `llm.py`, but it means auth failures only surface at request time, not startup.

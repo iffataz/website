@@ -7,5 +7,28 @@ stack: [Python, Flask, Google Gemini, Pandas, Pydantic]
 github: https://github.com/iffataz/Decora
 ---
 
-Write-up pending the content phase. Planned structure: what it is, why it was
-built, two or three real technical decisions, and what I would do differently.
+## What it is
+
+Decora is a Flask app with two pages: a form for a room image URL and a furniture type, and a results page with four product tiles. Gemini looks at the room photo and extracts its style, colours, mood, and search keywords, `apiloader.py` searches the IKEA (AU) catalogue with those keywords, and Gemini scores up to ten candidate products against the room. The best four come back as the recommendation.
+
+## Why I built it
+
+I wanted to wire a vision model into a real decision, not just a chat box. Furniture matching fit: there's a public catalogue to search, and "does this look right in this room" is a judgment call a vision model can score.
+
+## Decisions that mattered
+
+### One text description instead of two images per comparison
+
+I tried sending Gemini the room image and each product image together for a direct visual comparison (commit `a6330a5`), then reverted it the same day (`65a7eb2`). The kept design has `analyse_room()` run once and return a short text description (style, colours, mood), and `score_product()` rates each candidate against that description instead of the room photo, one Gemini call up front instead of re-sending the room image on every scoring call.
+
+### Scoring with a qualify-and-fallback cutoff
+
+`sender.py` scores up to 10 candidates, keeps anything scoring 6 or higher, and sorts by score. If nothing clears 6, it falls back to the top 4 by score instead of returning nothing (fixed in `42b857a`, which also fixed a pandas NaN check where a missing image URL was truthy and never triggered the fallback it was meant to).
+
+### Pydantic to validate the IKEA response before pandas touches it
+
+`apiloader.py` defines an `ItemModel` (id, name, image URLs, price, rating) and validates every raw IKEA search result against it before building the DataFrame. That catches shape changes in the IKEA API response at the parsing boundary instead of as a KeyError deep in scoring.
+
+## What I would do differently
+
+`score_product` returns `0` on any exception, which is also a valid low score, so a failed call and a genuinely bad match look identical downstream. I tried fixing this alongside the direct-visual-comparison change and reverted both together, so it's unresolved. I'd also revisit the cap of 10 scoring calls per search: it exists to stay under Gemini's 15 RPM free-tier limit, not because 10 is the right number of candidates.

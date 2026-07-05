@@ -6,5 +6,28 @@ order: 1
 stack: [React, TypeScript, Vite, Express, SQLite]
 ---
 
-Write-up pending the content phase. Planned structure: what it is, why it was
-built, two or three real technical decisions, and what I would do differently.
+## What it is
+
+IT-MATE is an internal operations portal I'm building for an IT managed-service provider. It pulls together the day-to-day data an MSP needs: device counts and security-agent coverage (Webroot AV, Huntress EDR) per client, service profiles, renewals, ad hoc billing that pushes invoices to QuickBooks Online, a staff task board, and password-protected onboarding forms. Stack is React, TypeScript and Vite on the frontend, Express and SQLite (via better-sqlite3) on the backend, JWT and bcrypt for auth.
+
+## Why I built it
+
+The team was tracking security coverage by exporting spreadsheets from Webroot, Huntress and their RMM and matching them by hand against a client list. I built the matching logic first (device-name prefix extraction plus a Levenshtein-based fuzzy match in `src/utils/excel.ts`), then wired direct API integrations for Syncro, Webroot and Huntress so the spreadsheet step becomes optional instead of mandatory.
+
+## Decisions that mattered
+
+### SQLite over a client-server database
+
+The app runs as one Node process: Express serves the built React app and the API off the same port, with the database as a single file on disk. For an internal tool serving one office, that's one process to keep alive and one file to back up, not a separate database server to run and patch.
+
+### Encrypting integration credentials at rest
+
+Webroot, Huntress, Syncro and QuickBooks credentials sit in a generic `api_tools` table or `quickbooks_config`. I added AES-256-GCM encryption in `server/lib/secrets.ts`, applied on write and reversed on read, so the SQLite file doesn't hold usable API keys if someone copies it off the server.
+
+### Forced password change off the seeded admin account
+
+The app seeds a default admin login on first run. `server/db.ts` checks on startup whether that account still has the seeded password and flags `must_change_password`, and the frontend routes to a change-password screen before anything else loads. It closes off the "nobody changed the default login" failure mode without a setup wizard.
+
+## What I would do differently
+
+The data-fetching hook (`src/context/DataContext.tsx`) issues its calls as one long sequential `await` chain instead of in parallel, and trips two `react-hooks` lint rules I've left unresolved because fixing them properly means restructuring how the app fetches data. The Webroot, Huntress and Syncro integrations have also only been checked against real error responses, not a live tenant with real data, since I don't have production credentials yet. That check is still outstanding.

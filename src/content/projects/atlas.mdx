@@ -7,5 +7,28 @@ stack: [Next.js, TypeScript, Tailwind CSS, MongoDB]
 github: https://github.com/iffataz/Atlas
 ---
 
-Write-up pending the content phase. Planned structure: what it is, why it was
-built, two or three real technical decisions, and what I would do differently.
+## What it is
+
+Atlas takes spoken dietary preferences and turns them into a 7-day meal plan: breakfast, lunch, and dinner for each day, plus a shopping list with every ingredient aggregated by category. You say what you want once, review the plan, and can refine it by voice again, for example swapping a day's dinner for something else. Plans are saved to MongoDB so you can browse and reload past ones.
+
+## Why I built it
+
+The app started as a voice grocery search tool before I pivoted it into a meal planner, which is the version that shipped. Speaking preferences instead of filling out a form felt like a better fit for something as unstructured as "I'm vegetarian, like Asian food, keep it budget-friendly." I wanted to see if a single sentence could drive a structured plan and a usable shopping list without any manual entry.
+
+## Decisions that mattered
+
+### Structured output from the LLM, not free text
+
+`lib/llm.ts` calls Groq's Llama 4 Scout with `response_format: json_schema`, defining the exact shape of a day (breakfast, lunch, dinner, each with name, description, and ingredients with quantity, unit, and category). The prompt also pins the category enum and unit list in plain text as a backup. This came after an earlier commit had to switch from `json_schema` to `json_object` mode because Llama 3.3 didn't support it, so getting reliable structure was a real constraint, not a nice-to-have.
+
+### Voice capture is single-utterance, not a running listener
+
+`VoiceRecorder.tsx` uses the Web Speech API with `continuous = false`: it starts listening, takes the first result, and stops. That's simpler than an earlier version of the same component (from the grocery-search era) that had to watch for the word "done" and split it out of the transcript to know when the user finished talking. The meal planner doesn't need that because one sentence of preferences, or one instruction to refine, is enough.
+
+### Ingredient aggregation normalizes names and units before merging
+
+`lib/aggregateIngredients.ts` lowercases and singularizes ingredient names (with a small irregular-plural table for things like "tomatoes" and "leaves"), converts cooking units like cups and tablespoons to milliliters via `unitConversion.ts`, then groups by name and unit so "2 cups flour" and "1 cup flour" from different meals collapse into one shopping list line. Quantities are rounded and scaled up (ml to L, g to kg) at the end so the list reads like something you'd actually take to a store.
+
+## What I would do differently
+
+The Web Speech API only works in Chrome and Edge, which the README states outright, so there's no fallback for Firefox or Safari users. Refinement re-sends the entire plan as JSON in the prompt and asks the model to return all 7 days again rather than patching just the changed meal, which works but is more tokens and latency than a targeted diff would need. There's also no test suite. Verification is manual, through the browser and the `/api/health` route.
