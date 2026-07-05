@@ -25,10 +25,6 @@ I wanted a small, complete CRUD app combining pieces I hadn't put together befor
 
 `prisma/schema.prisma` models tags as `Tag` and a `RecipeTag` join table with a composite `@@id([recipeId, tagId])`, rather than a string array on `Recipe`. The tag filter in `app/api/recipes/route.ts` walks that relation with a case-insensitive match on `tag.name`, and saving a recipe uses `connectOrCreate` so an existing tag like "quick" is reused instead of duplicated.
 
-### JWT sessions with a Credentials provider alongside Google
-
-`lib/auth.ts` combines `CredentialsProvider` (email/password, checked against a bcrypt hash) and `GoogleProvider` under one `PrismaAdapter`, with JWT sessions. The `emailVerified` field was added to `User` in a later commit specifically because the NextAuth adapter required it: a sign the schema grew to match the auth library rather than being fully planned upfront.
-
 ## What I would do differently
 
 There's no Prisma migrations folder in the repo, just `db:push` and `db:migrate` scripts, so schema history isn't captured beyond the git log. Ingredients and steps are stored as `Json` on `Recipe` instead of their own tables, fine for rendering a list but ruling out querying by individual ingredient later. There's also no automated test suite, so the auth flows and ownership checks are only verified by hand.

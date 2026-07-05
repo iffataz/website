@@ -12,7 +12,7 @@ IT-MATE is an internal operations portal I'm building for an IT managed-service 
 
 ## Why I built it
 
-The team was tracking security coverage by exporting spreadsheets from Webroot, Huntress and their RMM and matching them by hand against a client list. I built the matching logic first (device-name prefix extraction plus a Levenshtein-based fuzzy match in `src/utils/excel.ts`), then wired direct API integrations for Syncro, Webroot and Huntress so the spreadsheet step becomes optional instead of mandatory.
+The team was tracking security coverage by exporting spreadsheets from Webroot, Huntress and their RMM and matching them by hand against a client list. I built the tool to replace that: first the reconciliation logic, then direct API integrations for Syncro, Webroot and Huntress so the spreadsheet step becomes optional instead of mandatory.
 
 ## Decisions that mattered
 
@@ -24,6 +24,6 @@ The app runs as one Node process: Express serves the built React app and the API
 
 Webroot, Huntress, Syncro and QuickBooks credentials sit in a generic `api_tools` table or `quickbooks_config`. I added AES-256-GCM encryption in `server/lib/secrets.ts`, applied on write and reversed on read, so the SQLite file doesn't hold usable API keys if someone copies it off the server.
 
-### Forced password change off the seeded admin account
+### Fuzzy matching to reconcile three vendors' device names
 
-The app seeds a default admin login on first run. `server/db.ts` checks on startup whether that account still has the seeded password and flags `must_change_password`, and the frontend routes to a change-password screen before anything else loads. It closes off the "nobody changed the default login" failure mode without a setup wizard.
+The Webroot, Huntress and RMM exports rarely agree on how a device or client is named, so exact-match joins would report coverage gaps that are really just naming noise. `src/utils/excel.ts` extracts a company prefix from each device name and falls back to a Levenshtein-based similarity score to line the three sources up against one client list. Getting that reconciliation right came first, before any dashboard existed to display it.

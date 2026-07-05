@@ -21,10 +21,6 @@ I wanted a RAG pipeline that does more than retrieve once and hope, and LangGrap
 
 `grade_documents_node` asks the LLM whether the retrieved chunks are sufficient, and if not, `rewrite_query_node` rephrases the question and sends it back through `retrieve`. The loop can't run forever: `grade_documents_node` is the only place that flips `limited_context` to true once `rewrite_count` hits `max_rewrites` (2), and the routing function just reads that flag back. `test_rewrite_loop_is_bounded_at_max_rewrites` pins the behavior down.
 
-### Structured output for routing and grading, not string parsing
-
-`router_node` and `grade_documents_node` use `with_structured_output` against Pydantic models (`RouteDecision`, `GradeResult`), so a route or relevance grade comes back as a typed object instead of a string I'd have to parse.
-
 ### Threading a `retrieval_attempted` flag through generate
 
 A manual review, logged in `MEMORY.md`, caught that `generate()`'s empty-docs branch couldn't tell "general question, retrieval never attempted" apart from "retrieval attempted, nothing relevant came back." Both left `cited_docs` empty. I added an explicit `retrieval_attempted` flag, a dedicated prompt for the second case, and a regression test, so the assistant doesn't say "no documents were needed" when the real answer is "the docs didn't have it."
