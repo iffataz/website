@@ -4,10 +4,10 @@ import rehypeAutolinkHeadings from 'rehype-autolink-headings'
 
 const components = {
   h2: (props: any) => (
-    <h2 className="mt-10 mb-4 border-b border-rule pb-2 text-xl font-medium tracking-tight" {...props} />
+    <h2 className="mt-10 mb-4 border-b border-rule pb-2 text-xl font-medium tracking-tight [&>a]:text-inherit [&>a]:no-underline" {...props} />
   ),
   h3: (props: any) => (
-    <h3 className="mt-8 mb-3 text-lg font-medium tracking-tight" {...props} />
+    <h3 className="mt-8 mb-3 text-lg font-medium tracking-tight [&>a]:text-inherit [&>a]:no-underline" {...props} />
   ),
   p: (props: any) => <p className="mb-4 leading-relaxed" {...props} />,
   ul: (props: any) => <ul className="mb-4 list-disc space-y-2 pl-5" {...props} />,
