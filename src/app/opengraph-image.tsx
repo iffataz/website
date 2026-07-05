@@ -3,7 +3,7 @@ import { siteConfig } from '@/src/lib/site'
 
 export const size = { width: 1200, height: 630 }
 export const contentType = 'image/png'
-export const alt = 'Iffat Abdul Azeez — project ledger'
+export const alt = 'Iffat Abdul Azeez: project ledger'
 
 export default function OgImage() {
   return new ImageResponse(

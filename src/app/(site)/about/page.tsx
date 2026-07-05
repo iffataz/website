@@ -1,6 +1,5 @@
 import { MonoLabel } from '@/src/components/MonoLabel'
 import { createMetadata } from '@/src/lib/seo/metadata'
-import { siteConfig } from '@/src/lib/site'
 
 export const metadata = createMetadata({
   title: 'About',
@@ -8,22 +7,29 @@ export const metadata = createMetadata({
   path: '/about',
 })
 
-// DRAFT — mined from the project repos; Iffat review before merge.
-const toolkit = ['TypeScript', 'React / Next.js', 'Node.js', 'Python', 'SQL']
+const toolkit = [
+  'TypeScript',
+  'React / Next.js',
+  'Node.js',
+  'Python',
+  'SQL',
+  'AWS',
+  'Google Cloud',
+]
 
 export default function AboutPage() {
   return (
     <div className="max-w-xl pt-14">
       <h1 className="text-3xl font-medium tracking-tight">About</h1>
 
-      {/* DRAFT — Iffat review before merge. Facts limited to what is verifiable
-          today; hackathons/internships/coursework are added in the content
-          phase from the resume. */}
       <p className="mt-6 leading-relaxed">
-        I like building small, complete tools and seeing them through — from
-        first commit to something another person can actually use. The projects
-        on this site are all real and all mine. I studied computer science at
-        Monash University.
+        I&apos;m a full stack developer. I build complete tools and see them
+        through, from first commit to something another person can actually
+        use. I work across React, Next.js, Node.js, and Python, with AWS and
+        Google Cloud, and I like the data side of software as much as the
+        interface: retrieval pipelines, vector search, and the SQL in between.
+        I studied computer science at Monash University. The projects on this
+        site are all real and all mine.
       </p>
 
       <section className="mt-12">
@@ -36,19 +42,6 @@ export default function AboutPage() {
           ))}
         </div>
       </section>
-
-      {siteConfig.resumeAvailable && (
-        <section className="mt-12">
-          <a
-            href="/resume.pdf"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="font-mono text-xs text-accent hover:underline"
-          >
-            resume (pdf) ↗
-          </a>
-        </section>
-      )}
     </div>
   )
 }

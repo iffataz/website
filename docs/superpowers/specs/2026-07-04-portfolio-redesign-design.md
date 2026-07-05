@@ -19,7 +19,7 @@ Four surfaces:
 1. **Home** — name, one positioning line, a monospace status line ("now: building · open to software engineering roles" — draft), then the indexed project ledger (rows 01–05) as the centerpiece. Contact links in the footer. (Update 2026-07-04: Iffat is a Monash CS graduate — no student/new-grad framing anywhere; the degree is an About-page fact only.)
 2. **Projects** (`/projects`) — the full ledger. Each row: index, name, one-line description, stack tags in mono, year.
 3. **Project detail** (`/projects/[slug]`) — a build-log narrative per project: what it is, why it was built, 2–3 real technical decisions, and what would be done differently. MDX-sourced.
-4. **About** (`/about`) — short first-person bio, non-code work (hackathons / internships / coursework), toolkit, resume download.
+4. **About** (`/about`) — short first-person bio, toolkit. (Update 2026-07-05: no resume on the site, by Iffat's decision — she tailors resumes per application and doesn't want a mismatched public copy. Non-code work section deferred; facts to come from Iffat directly, not a resume file.)
 
 Removed: `/writing` and its posts, `/now` (folded into the home status line), the RSS route. The MDX content pipeline is retained so writing can return later without replumbing.
 

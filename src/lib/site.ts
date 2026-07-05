@@ -1,11 +1,11 @@
 export const siteConfig = {
   name: 'Iffat Abdul Azeez',
   url: 'https://iffataz.dev',
-  // DRAFT — Iffat review before merge
-  positioning: 'I build and ship complete software.',
+  positioning: 'Full stack developer who ships complete products and the data systems behind them.',
   status: 'now: building · open to software engineering roles',
-  // Filled in the content phase once links are verified to resolve (LinkedIn, email, GitHub).
-  contacts: [] as { label: string; href: string }[],
-  // Flipped to true once the real resume PDF lands in public/.
-  resumeAvailable: false,
+  contacts: [
+    { label: 'github', href: 'https://github.com/iffataz' },
+    { label: 'linkedin', href: 'https://www.linkedin.com/in/iffat-abdul-azeez' },
+    { label: 'iffatazeez@gmail.com', href: 'mailto:iffatazeez@gmail.com' },
+  ],
 }
