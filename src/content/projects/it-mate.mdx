@@ -27,7 +27,3 @@ Webroot, Huntress, Syncro and QuickBooks credentials sit in a generic `api_tools
 ### Forced password change off the seeded admin account
 
 The app seeds a default admin login on first run. `server/db.ts` checks on startup whether that account still has the seeded password and flags `must_change_password`, and the frontend routes to a change-password screen before anything else loads. It closes off the "nobody changed the default login" failure mode without a setup wizard.
-
-## What I would do differently
-
-The data-fetching hook (`src/context/DataContext.tsx`) issues its calls as one long sequential `await` chain instead of in parallel, and trips two `react-hooks` lint rules I've left unresolved because fixing them properly means restructuring how the app fetches data. The Webroot, Huntress and Syncro integrations have also only been checked against real error responses, not a live tenant with real data, since I don't have production credentials yet. That check is still outstanding.
